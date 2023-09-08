@@ -24,7 +24,7 @@ public class ExtentManager {
 
         spark.config().setTheme(Theme.DARK);
         spark.config().setDocumentTitle("My Report");
-        spark.config().setReportName("Report Custom Name");
+        spark.config().setReportName("MovieO Report");
         extentReports.attachReporter(spark);
     }
     @AfterSuite
