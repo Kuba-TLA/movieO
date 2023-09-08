@@ -82,4 +82,65 @@ public class ExcelUtils {
             System.out.print("\n");
         }
     }
+
+    public void changeCellValue(String searchColumnName, String searchValue, String updateColumnName, String newValue) {
+        int searchColumnIndex = getColumnIndex(searchColumnName);
+        int updateColumnIndex = getColumnIndex(updateColumnName);
+
+        if (searchColumnIndex == -1 || updateColumnIndex == -1) {
+            System.out.println("Column not found.");
+            return;
+        }
+
+        for (Row row : sheet) {
+            Cell searchCell = row.getCell(searchColumnIndex);
+            if (searchCell != null && searchCell.getCellType() == CellType.STRING && searchCell.getStringCellValue().equals(searchValue)) {
+                Cell updateCell = row.getCell(updateColumnIndex, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
+                updateCell.setCellValue(newValue);
+                break; // Assuming there's only one matching row
+            }
+        }
+    }
+
+    private int getColumnIndex(String columnName) {
+        Row headerRow = sheet.getRow(0); // Assuming the first row contains headers
+        for (Cell cell : headerRow) {
+            if (cell.getCellType() == CellType.STRING && cell.getStringCellValue().equals(columnName)) {
+                return cell.getColumnIndex();
+            }
+        }
+        return -1; // Column not found
+    }
+
+    // Select Value in a Dropdown (Cell):
+    public void selectDropdownCellValue(String searchColumnName, String searchValue, String selectColumnName, String optionToSelect) {
+        int searchColumnIndex = getColumnIndex(searchColumnName);
+        int selectColumnIndex = getColumnIndex(selectColumnName);
+
+        if (searchColumnIndex == -1 || selectColumnIndex == -1) {
+            System.out.println("Column not found.");
+            return;
+        }
+
+        for (Row row : sheet) {
+            Cell searchCell = row.getCell(searchColumnIndex);
+            if (searchCell != null && searchCell.getCellType() == CellType.STRING && searchCell.getStringCellValue().equals(searchValue)) {
+                Cell selectCell = row.getCell(selectColumnIndex, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
+                selectCell.setCellValue(optionToSelect);
+                break; // Assuming there's only one matching row
+            }
+        }
+    }
+
+    //Wait for a Condition:
+    public void waitForCondition(int rowNum, int colNum, String expectedValue, long timeoutInSeconds) {
+        long startTime = System.currentTimeMillis();
+        while (System.currentTimeMillis() - startTime < timeoutInSeconds * 1000) {
+            String cellValue = getCellData(rowNum, colNum);
+            if (cellValue.equals(expectedValue)) {
+                return; // Condition met
+            }
+        }
+        System.out.println("Condition not met within the specified timeout.");
+    }
 }
