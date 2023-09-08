@@ -82,25 +82,25 @@ public class SeleniumUtils {
 
 
 
-        // Method to select an option by visible text
-        public static void selectByVisibleText(WebElement dropdownElement, String visibleText) {
-            Select select = new Select(dropdownElement);
-            select.selectByVisibleText(visibleText);
-        }
+    // Method to select an option by visible text
+    public static void selectByVisibleText(WebElement dropdownElement, String visibleText) {
+        Select select = new Select(dropdownElement);
+        select.selectByVisibleText(visibleText);
+    }
 
-        // Method to select an option by value attribute
-        public static void selectByValue(WebElement dropdownElement, String value) {
-            Select select = new Select(dropdownElement);
-            select.selectByValue(value);
-        }
+    // Method to select an option by value attribute
+    public static void selectByValue(WebElement dropdownElement, String value) {
+        Select select = new Select(dropdownElement);
+        select.selectByValue(value);
+    }
 
-        // Method to select an option by index
-        public static void selectByIndex(WebElement dropdownElement, int index) {
-            Select select = new Select(dropdownElement);
-            select.selectByIndex(index);
-        }
+    // Method to select an option by index
+    public static void selectByIndex(WebElement dropdownElement, int index) {
+        Select select = new Select(dropdownElement);
+        select.selectByIndex(index);
+    }
 
-        public static String switchToWindowAndVerifyTitle(WebDriver driver, ExtentManager extentManager){
+    public static String switchToWindowAndVerifyTitle(WebDriver driver, ExtentManager extentManager){
         String currentWindowID = driver.getWindowHandle();
         String title = "Verified";
 
