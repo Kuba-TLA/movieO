@@ -1,0 +1,11 @@
+{
+  "movies": [
+    {
+      "title": "Movie Title 1",
+      "year": "2022",
+      "director": "Director 1",
+      "genre": "Action",
+      "rating": "8.5"
+    }
+  ]
+}
