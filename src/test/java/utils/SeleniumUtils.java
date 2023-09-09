@@ -27,7 +27,7 @@ public class SeleniumUtils {
         Duration duration = Duration.ofSeconds(seconds);
 
         this.driver = driver;
-        this.wait = new WebDriverWait(driver,duration);
+        this.wait = new WebDriverWait(driver, duration);
     }
 
     // Wait for an element to be visible
@@ -49,7 +49,6 @@ public class SeleniumUtils {
     public void waitForCustomCondition(ExpectedCondition<Boolean> condition) {
         wait.until(condition);
     }
-
 
 
     // Action Methods
@@ -80,8 +79,6 @@ public class SeleniumUtils {
     }
 
 
-
-
     // Method to select an option by visible text
     public static void selectByVisibleText(WebElement dropdownElement, String visibleText) {
         Select select = new Select(dropdownElement);
@@ -100,13 +97,13 @@ public class SeleniumUtils {
         select.selectByIndex(index);
     }
 
-    public static String switchToWindowAndVerifyTitle(WebDriver driver, ExtentManager extentManager){
+    public static String switchToWindowAndVerifyTitle(WebDriver driver, ExtentManager extentManager) {
         String currentWindowID = driver.getWindowHandle();
         String title = "Verified";
 
         Set<String> allWindowIDs = driver.getWindowHandles();
-        for(String each: allWindowIDs){
-            if (!each.equals(currentWindowID)){
+        for (String each : allWindowIDs) {
+            if (!each.equals(currentWindowID)) {
                 driver.switchTo().window(each);
                 title = driver.getTitle();
                 extentManager.logScreenshot();
@@ -118,12 +115,13 @@ public class SeleniumUtils {
         return title;
 
     }
-    public static void switchToNextWindow(WebDriver driver){
+
+    public static void switchToNextWindow(WebDriver driver) {
         String currentWindowId = driver.getWindowHandle();
         Set<String> allWindowIDs = driver.getWindowHandles();
 
-        for (String eachWindow : allWindowIDs){
-            if(!eachWindow.equalsIgnoreCase(currentWindowId)){
+        for (String eachWindow : allWindowIDs) {
+            if (!eachWindow.equalsIgnoreCase(currentWindowId)) {
                 driver.switchTo().window(eachWindow);
             }
         }
