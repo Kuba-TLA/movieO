@@ -9,20 +9,14 @@ import java.io.IOException;
 import java.util.Iterator;
 
 public class ExcelUtils {
-    private FileInputStream fis;
-    private Workbook workbook;
-    private Sheet sheet;
+    private final FileInputStream fis;
+    private final Workbook workbook;
+    private final Sheet sheet;
 
     public ExcelUtils(String filePath, String sheetName) throws IOException {
         fis = new FileInputStream(filePath);
         workbook = new XSSFWorkbook(fis);
         sheet = workbook.getSheet(sheetName);
-    }
-
-    public void close() throws IOException {
-        if (fis != null) {
-            fis.close();
-        }
     }
 
     public String getCellData(int rowNum, int colNum) {
@@ -41,11 +35,12 @@ public class ExcelUtils {
             case NUMERIC:
                 return String.valueOf(cell.getNumericCellValue());
             default:
-                return cell.toString();
+                return cell.getStringCellValue(); // .toString?
         }
     }
 
     public int getRowCount() {
+
         return sheet.getPhysicalNumberOfRows();
     }
 
@@ -54,7 +49,7 @@ public class ExcelUtils {
         return headerRow.getPhysicalNumberOfCells();
     }
 
-    public void setCellData(int rowNum, int colNum, String value) throws IOException {
+    public void setCellData(int rowNum, int colNum, String value) {
         Row row = sheet.getRow(rowNum);
         if (row == null) {
             row = sheet.createRow(rowNum);
@@ -63,20 +58,44 @@ public class ExcelUtils {
         cell.setCellValue(value);
     }
 
-    public void saveAndClose(String filePath) throws IOException {
-        FileOutputStream fos = new FileOutputStream(filePath);
-        workbook.write(fos);
-        fos.close();
-        close();
+    public void saveAndClose(String filePath) {
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(filePath);
+            workbook.write(fos);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            closeFOS(fos);
+            closeFIS();
+        }
+    }
+
+    private void closeFOS(FileOutputStream fos){
+        if (fos != null) {
+            try {
+                fos.close();
+            } catch (IOException e) {
+                System.err.println("Can't close. Potential resource leak.");
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void closeFIS() {
+        if (fis != null) {
+            try {
+                fis.close();
+            } catch (IOException e) {
+                System.err.println("Can't close. Potential resource leak.");
+                e.printStackTrace();
+            }
+        }
     }
 
     public void printSheetContents() {
-        Iterator<Row> rowIterator = sheet.iterator();
-        while (rowIterator.hasNext()) {
-            Row row = rowIterator.next();
-            Iterator<Cell> cellIterator = row.iterator();
-            while (cellIterator.hasNext()) {
-                Cell cell = cellIterator.next();
+        for (Row row : sheet) {
+            for (Cell cell : row) {
                 System.out.print(cell + " - " + cell.getCellType() + " | ");
             }
             System.out.print("\n");
@@ -132,15 +151,4 @@ public class ExcelUtils {
         }
     }
 
-    //Wait for a Condition:
-    public void waitForCondition(int rowNum, int colNum, String expectedValue, long timeoutInSeconds) {
-        long startTime = System.currentTimeMillis();
-        while (System.currentTimeMillis() - startTime < timeoutInSeconds * 1000) {
-            String cellValue = getCellData(rowNum, colNum);
-            if (cellValue.equals(expectedValue)) {
-                return; // Condition met
-            }
-        }
-        System.out.println("Condition not met within the specified timeout.");
-    }
 }
