@@ -106,7 +106,7 @@ public class SeleniumUtils {
             if (!each.equals(currentWindowID)) {
                 driver.switchTo().window(each);
                 title = driver.getTitle();
-                extentManager.logScreenshot();
+ //               extentManager.logScreenshot();
                 driver.close();
             }
         }
