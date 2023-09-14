@@ -2,10 +2,8 @@ package utils;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
-import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
@@ -13,11 +11,10 @@ import org.testng.annotations.*;
 import java.lang.reflect.Method;
 
 public class ExtentManager {
-    WebDriver driver;
     protected ExtentReports extentReports;
     protected ExtentTest extentTest;
 
-    @BeforeSuite
+    @BeforeSuite(alwaysRun = true)
     public void createReport(){
         extentReports = new ExtentReports();
         ExtentSparkReporter spark = new ExtentSparkReporter("report.html");
@@ -27,18 +24,19 @@ public class ExtentManager {
         spark.config().setReportName("MovieO Report");
         extentReports.attachReporter(spark);
     }
-    @AfterSuite
+    @AfterSuite(alwaysRun = true)
     public void closeReporter(){
         extentReports.flush();
     }
-    @BeforeMethod
-    public ExtentTest createTestReport(WebDriver driver, Method method){
-        this.driver = driver;
+
+    @BeforeMethod(alwaysRun = true)
+    public ExtentTest createTestReport(Method method){
         extentTest = extentReports.createTest(getCustomTestName(method));
         logTestGroups(method);
         return extentTest;
     }
-    @AfterMethod
+
+    @AfterMethod(alwaysRun = true)
     public void closeTestReport(ITestResult result){
         if(result.getStatus() == ITestResult.SUCCESS){
             extentTest.pass("TEST PASSED");
