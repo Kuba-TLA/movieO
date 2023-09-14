@@ -15,3 +15,21 @@ Tasks for the next class:
 Add all necessary classes, methods.
 Push to your repo and create a pull request.
 Please don't merge to Main branch, I'll do it this time.
+
+Day 2 tasks:
+Create your test cases in Excel file and put under day2Tasks folder.
+Reminder, each test case should have:
+        Test case number
+        Test case name
+        Description
+        Test Data (if needed)
+        Expected result
+
+Assigned:
+- Home page test cases - Irina
+- Browse Movies - Kelvin
+- Browser Lists - Ksenia
+- Info page (includes 5 tabs) - Julia
+- A movie page - Nurik
+- A list page - Prim
+- Search option on Home page - Taita
