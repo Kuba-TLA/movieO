@@ -1,0 +1,17 @@
+Tasks for the next class:
+
+1. Add utility classes
+ - Uran: BrowserUtils class +
+ - Ksenia: Property reader class +
+ - Irina: Excel util class +
+ - Nurik: Date util class +
+ - Prim: Extent report +
+ - Julia: Selenium utils +
+ - Daria T: Screenshot utils +
+ - Dariia I: Text file utils --
+ - Kelvin: Json file utils +
+ - Diana: Listeners --
+
+Add all necessary classes, methods.
+Push to your repo and create a pull request.
+Please don't merge to Main branch, I'll do it this time.
