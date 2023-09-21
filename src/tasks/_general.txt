@@ -31,5 +31,5 @@ Assigned:
 - Browser Lists - Ksenia
 - Info page (includes 5 tabs) - Julia
 - A movie page - Nurik
-- A list page - Prim
+- A list page - Daria
 - Search option on Home page - Taita
