@@ -15,8 +15,8 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 
-public class SeleniumUtils {
-    private WebDriver driver;
+public class SeleniumUtils extends BrowserUtils{
+   // private WebDriver driver;
     private Actions actions;
 
     private WebDriverWait wait;
@@ -106,7 +106,11 @@ public class SeleniumUtils {
             if (!each.equals(currentWindowID)) {
                 driver.switchTo().window(each);
                 title = driver.getTitle();
+
+               // ExtentManager.logScreenshot();
+
  //               extentManager.logScreenshot();
+
                 driver.close();
             }
         }
